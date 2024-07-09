@@ -48,7 +48,21 @@ func createTables() {
 	categoryTable := `
     CREATE TABLE IF NOT EXISTS categories (
         id TEXT PRIMARY KEY,
-        name TEXT
+        name TEXT,
+        post_id TEXT,
+        go TEXT,
+        php TEXT,
+        python TEXT,
+        c TEXT,
+        csharp TEXT,
+        cplus TEXT,
+        rust TEXT,
+        java TEXT,
+        javascript TEXT,
+        html TEXT,
+        css TEXT,
+        chat TEXT,
+        FOREIGN KEY(post_id) REFERENCES posts(id)
     );`
 
 	_, err := DB.Exec(userTable)

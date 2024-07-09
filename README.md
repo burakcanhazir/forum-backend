@@ -32,9 +32,6 @@ DELETE /commits/{id}: Belirli bir commit'i sil.
 categories Tablosu İçin Endpointler
 GET /categories: Tüm kategorileri listele.
 GET /categories/{id}: Belirli bir kategoriyi getir.
-POST /categories: Yeni bir kategori oluştur.
-PUT /categories/{id}: Belirli bir kategoriyi güncelle.
-DELETE /categories/{id}: Belirli bir kategoriyi sil.
 
 
 
