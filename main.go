@@ -6,6 +6,7 @@ import (
 
 	"burakforum/controllers"
 	"burakforum/database"
+	"burakforum/middleware"
 
 	"github.com/gorilla/mux"
 )
@@ -14,11 +15,17 @@ func main() {
 	database.InitDB()
 	r := mux.NewRouter()
 
+	protected := r.PathPrefix("/api/v1").Subrouter()
+	protected.Use(middleware.AuthMiddleware)
+
+	// oturum izni olması gereken endpointleri ve olmayanları belirtip farklı işlemler yapacağım.
+
 	// USERS İŞLEMLERİ
-	r.HandleFunc("/api/v1/getusers", controllers.GetUsers).Methods("GET")          // KULLANICILARI GÖRÜNTÜLE
-	r.HandleFunc("/api/v1/getusers/{id}", controllers.GetUsersID).Methods("GET")   // X KULLANICIYI GÖRÜNTÜLE
-	r.HandleFunc("/api/v1/createusers", controllers.CreateUsers).Methods("POST")   // YENİ KULLANICI OLUŞTUR
-	r.HandleFunc("/api/v1/deleteusers", controllers.DeleteUsers).Methods("DELETE") // KULLANICI SİLME
+	r.HandleFunc("/api/v1/getusers", controllers.GetUsers).Methods("GET")           // KULLANICILARI GÖRÜNTÜLE
+	r.HandleFunc("/api/v1/getusers/{id}", controllers.GetUsersID).Methods("GET")    // X KULLANICIYI GÖRÜNTÜLE
+	r.HandleFunc("/api/v1/register", controllers.Register).Methods("POST")          // YENİ KULLANICI OLUŞTUR
+	r.HandleFunc("/api/v1/login", controllers.Login).Methods("POST")                // GİRİŞ YAP
+	protected.HandleFunc("/deleteusers", controllers.DeleteUsers).Methods("DELETE") // KULLANICI SİLME
 
 	// POST İŞLEMLERİ
 	r.HandleFunc("/api/v1/homepage", controllers.GetPosts).Methods("GET") // tüm postları görüntüle
