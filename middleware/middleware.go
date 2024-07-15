@@ -4,7 +4,17 @@ import (
 	"context"
 	"net/http"
 	"strings"
+
+	"github.com/dgrijalva/jwt-go"
 )
+
+// Your secret key
+var jwtKey = []byte("my_secret_key")
+
+type UserClaims struct {
+	UserID string `json:"userId"`
+	jwt.StandardClaims
+}
 
 // AuthMiddleware yetkilendirme kontrolü yapan middleware fonksiyonu
 func AuthMiddleware(next http.Handler) http.Handler {
@@ -29,7 +39,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		}
 
 		// Token geçerliyse isteği bir sonraki handler'a geçir
-		// İsteğin context'ine claims ekleyebiliriz (opsiyonel)
+		// İsteğin context'ine claims ekleyebiliriz
 		ctx := r.Context()
 		ctx = context.WithValue(ctx, "userClaims", claims)
 		r = r.WithContext(ctx)

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"burakforum/middleware"
 	"burakforum/models"
+	"burakforum/services"
 
 	"github.com/google/uuid"
 )
@@ -19,7 +19,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user.ID = uuid.New().String()
-	err = middleware.RegisterUser(&user)
+	err = services.RegisterUser(&user)
 	if err != nil {
 		http.Error(w, "Failed to register user: "+err.Error(), http.StatusInternalServerError)
 		return

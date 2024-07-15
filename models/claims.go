@@ -1,12 +1,9 @@
 package models
 
-import (
-	"github.com/dgrijalva/jwt-go"
-)
+import "github.com/dgrijalva/jwt-go"
 
-// Claims yapısı, JWT içinde taşınacak bilgileri içerir
+// Claims represents the JWT claims
 type Claims struct {
-	UserID string `json:"user_id"`
-	Email  string `json:"email"`
+	UserID string `json:"userId"`
 	jwt.StandardClaims
 }

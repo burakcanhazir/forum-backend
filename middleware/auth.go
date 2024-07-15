@@ -3,7 +3,6 @@ package middleware
 import (
 	"database/sql"
 	"errors"
-	"log"
 	"time"
 
 	"burakforum/database"
@@ -13,40 +12,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var jwtKey = []byte("my_secret_key")
+// login işlemi yapılıyor ve token veriliyor
 
-func RegisterUser(user *models.User) error {
-	// Kullanıcının adı zaten var mı kontrol et
-	var existingUser models.User
-	checkQuery := "SELECT id, name, email FROM users WHERE name = ?"
-	err := database.DB.QueryRow(checkQuery, user.Name).Scan(&existingUser.ID, &existingUser.Name, &existingUser.Email)
-
-	if err != nil && err != sql.ErrNoRows {
-		log.Printf("Error checking for existing user: %v", err)
-		return err
-	}
-	if existingUser.Name != "" {
-		return errors.New("user with the same name already exists")
-	}
-
-	// Şifreyi şifrele
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return err
-	}
-	user.Password = string(hashedPassword)
-
-	// Yeni kullanıcıyı ekle
-	insertQuery := "INSERT INTO users (id, name, email, password) VALUES (?, ?, ?, ?)"
-	_, err = database.DB.Exec(insertQuery, user.ID, user.Name, user.Email, user.Password)
-	if err != nil {
-		log.Printf("Error creating user: %v", err)
-		return err
-	}
-	return nil
-}
-
-// login işlemi için yaptım
 func AuthenticateUser(name, password string) (string, error) {
 	var user models.User
 	query := "SELECT id, name, password FROM users WHERE name = ?"
@@ -60,13 +27,12 @@ func AuthenticateUser(name, password string) (string, error) {
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if err != nil {
-		return "", errors.New("invalid credentials")
+		return "", errors.New("FALSE PASSWORD")
 	}
 
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &models.Claims{
 		UserID: user.ID,
-		Email:  user.Email,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 		},
@@ -81,6 +47,7 @@ func AuthenticateUser(name, password string) (string, error) {
 	return tokenString, nil
 }
 
+// token doğrulaması yapılıyor
 func ValidateToken(tokenString string) (*models.Claims, error) {
 	claims := &models.Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {

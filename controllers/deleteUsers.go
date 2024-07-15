@@ -1,25 +1,29 @@
 package controllers
 
 import (
-	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"burakforum/models"
 	"burakforum/services"
 )
 
-func DeleteUsers(w http.ResponseWriter, r *http.Request) {
-	var user models.User
+const UserClaimsKey = "userClaims"
 
-	err := json.NewDecoder(r.Body).Decode(&user)
-	if err != nil {
-		http.Error(w, "AYIKLAMA YAPILIRKEN HATA OLUŞTU", http.StatusBadRequest)
+func DeleteUsers(w http.ResponseWriter, r *http.Request) {
+	// Context'ten kullanıcı kimliğini al
+	claims, ok := r.Context().Value(UserClaimsKey).(*models.Claims)
+	if !ok || claims == nil {
+		http.Error(w, "Yetkilendirme hatası", http.StatusUnauthorized)
 		return
 	}
-	err = services.DeleteUsers(&user)
+	fmt.Println(claims.UserID)
+
+	// Kullanıcı kimliği eşleşiyor mu kontrol et
+	err := services.DeleteUsers(claims.UserID)
 	if err != nil {
-		http.Error(w, "silinemedi-controllers paketine bak", http.StatusConflict)
+		http.Error(w, "Silinemedi - controllers paketine bak", http.StatusConflict)
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 }
