@@ -17,11 +17,12 @@ func createTables() {
 
 	postTable := `
     CREATE TABLE IF NOT EXISTS posts (
-        id TEXT PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT,
         user_id TEXT,
         content TEXT,
         created_at TEXT,
+        like_count INTEGER DEFAULT 0,
         FOREIGN KEY(user_id) REFERENCES users(id)
     );`
 

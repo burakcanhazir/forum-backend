@@ -10,6 +10,14 @@ import (
 )
 
 func CreatePost(w http.ResponseWriter, r *http.Request) {
+	// Context'ten kullanıcı kimliğini al
+	// aslında direk databaseden okuyabilir. !!! UĞRAŞACAĞIM... şu an tokenden veri çekip eşleştiriyor
+	claims, ok := r.Context().Value(UserClaimsKey).(*models.Claims)
+	if !ok || claims == nil {
+		http.Error(w, "Yetkilendirme hatası", http.StatusUnauthorized)
+		return
+	}
+
 	// JSON verilerini çözümle
 	var post models.Post
 
@@ -18,7 +26,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
+	post.UserID = claims.UserID
 	post.CreatedAt = time.Now().Format("2006-01-02 15:04:05")
 
 	err = services.CreatePost(&post)
@@ -26,4 +34,7 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to create post: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(post)
 }

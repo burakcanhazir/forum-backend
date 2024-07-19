@@ -9,7 +9,7 @@ import (
 
 // GetPosts fonksiyonu, veri tabanından postları döndürür
 func GetPosts() ([]models.Post, error) {
-	rows, err := database.DB.Query("SELECT id, title, content FROM posts")
+	rows, err := database.DB.Query("SELECT id, user_id, created_at, title, content FROM posts")
 	if err != nil {
 		return nil, err
 	}
@@ -18,7 +18,7 @@ func GetPosts() ([]models.Post, error) {
 	var posts []models.Post
 	for rows.Next() {
 		var post models.Post
-		if err := rows.Scan(&post.ID, &post.Title, &post.Content); err != nil {
+		if err := rows.Scan(&post.ID, &post.UserID, &post.CreatedAt, &post.Title, &post.Content); err != nil {
 			return nil, err
 		}
 		posts = append(posts, post)
