@@ -17,7 +17,7 @@ func createTables() {
 
 	postTable := `
     CREATE TABLE IF NOT EXISTS posts (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id TEXT PRIMARY KEY,
         title TEXT,
         user_id TEXT,
         content TEXT,
@@ -42,7 +42,6 @@ func createTables() {
         user_id TEXT,
         post_id TEXT,
         content TEXT,
-        created_at TEXT,
         FOREIGN KEY(user_id) REFERENCES users(id),
         FOREIGN KEY(post_id) REFERENCES posts(id)
     );`

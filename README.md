@@ -22,16 +22,15 @@ PUT /likes_dislikes/{id}: Belirli bir beğeni veya beğenmeyi güncelle.
 DELETE /likes_dislikes/{id}: Belirli bir beğeni veya beğenmeyi sil.
 
 commits Tablosu İçin Endpointler
-GET /commits: Tüm commit'leri listele.
-GET /commits/{id}: Belirli bir commit'i getir.
+GET /commits/{id}: Belirli bir kişinin tüm commit'i görüntüle.
 GET /posts/{post_id}/commits: Belirli bir gönderinin tüm commit'lerini listele.
 POST /commits: Yeni bir commit oluştur.
-PUT /commits/{id}: Belirli bir commit'i güncelle.
 DELETE /commits/{id}: Belirli bir commit'i sil.
 
 categories Tablosu İçin Endpointler
 GET /categories: Tüm kategorileri listele.
 GET /categories/{id}: Belirli bir kategoriyi getir.
+post tablosu ile match edip post atılırken en az bir kategori seçmesini isteyeceğim.
 
 
 

@@ -42,5 +42,8 @@ func main() {
 	protected.HandleFunc("/{post_id}/like", controllers.LikePost).Methods("POST") // POSTA LİKE ATMA
 	protected.HandleFunc("/mylikes", controllers.UsersLikesPost).Methods("GET")   // like attıklarını görüntüleme
 
+	// commit işlemleri
+	protected.HandleFunc("/createcommit/{id}", controllers.CreateCommit).Methods("POST")
+
 	log.Fatal(http.ListenAndServe(":8000", r))
 }

@@ -4,7 +4,7 @@ import "database/sql"
 
 // Post struct defines the structure for post data
 type Post struct {
-	ID        int           `json:"id"` // Post ID'si
+	ID        string        `json:"id"` // Post ID'si
 	Title     string        `json:"title"`
 	UserID    string        `json:"user_id"`    // Postu oluşturan kullanıcının ID'si
 	Content   string        `json:"content"`    // Post içeriği
