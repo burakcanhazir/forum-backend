@@ -13,7 +13,6 @@ import (
 
 func CreatePost(w http.ResponseWriter, r *http.Request) {
 	// Context'ten kullanıcı kimliğini al
-	// aslında direk databaseden okuyabilir. !!! UĞRAŞACAĞIM... şu an tokenden veri çekip eşleştiriyor
 	claims, ok := r.Context().Value(UserClaimsKey).(*models.Claims)
 	if !ok || claims == nil {
 		http.Error(w, "Yetkilendirme hatası", http.StatusUnauthorized)
@@ -39,6 +38,6 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(post)
 }

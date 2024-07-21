@@ -15,10 +15,10 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 
 	err := services.DeletePost(postID)
 	if err != nil {
-		if err.Error() == "no post found with the given ID" {
+		if err == services.ErrNoPostFound {
 			http.Error(w, err.Error(), http.StatusNotFound)
 		} else {
-			http.Error(w, "Failed to delete post", http.StatusInternalServerError)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 		return
 	}

@@ -21,6 +21,11 @@ func InitDB() {
 	createTables()
 
 	log.Println("Database connection established")
+
+	_, err = DB.Exec("PRAGMA foreign_keys = ON")
+	if err != nil {
+		log.Fatalf("Failed to enable foreign keys: %v", err)
+	}
 }
 
 func CloseDB() {

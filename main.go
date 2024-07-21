@@ -44,6 +44,7 @@ func main() {
 
 	// commit işlemleri
 	protected.HandleFunc("/createcommit/{id}", controllers.CreateCommit).Methods("POST")
-
+	protected.HandleFunc("/deletecommit/{postID}/{commitID}", controllers.DeleteCommit).Methods("DELETE")
+	// tam kontrol edilmedi hem commit hem post sahibi kontrolu tekrar yapılacak
 	log.Fatal(http.ListenAndServe(":8000", r))
 }

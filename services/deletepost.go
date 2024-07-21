@@ -1,32 +1,35 @@
 package services
 
 import (
+	"database/sql"
 	"errors"
+	"log"
 
 	"burakforum/database"
+	"burakforum/models"
 )
 
+var ErrNoPostFound = errors.New("no post found with the given ID")
+
 func DeletePost(postID string) error {
-	check := "DELETE FROM posts WHERE id = ?"
+	check := "SELECT id, title, content, user_id, created_at FROM posts WHERE id = ?"
+	var exp models.Post
 
-	stmt, err := database.DB.Prepare(check)
+	err := database.DB.QueryRow(check, postID).Scan(&exp.ID, &exp.Title, &exp.Content, &exp.UserID, &exp.CreatedAt)
 	if err != nil {
-		return err
-	}
-	defer stmt.Close()
-
-	result, err := stmt.Exec(postID)
-	if err != nil {
-		return err
-	}
-	rowsAffected, err := result.RowsAffected()
-	if err != nil {
+		if err == sql.ErrNoRows {
+			log.Printf("post yok: %v", err)
+			return ErrNoPostFound
+		}
+		log.Printf("post sorgusunda hata oluştu: %v", err)
 		return err
 	}
 
-	if rowsAffected == 0 {
-		return errors.New("no post found with the given ID")
+	query2 := "DELETE FROM posts WHERE id = ?"
+	_, err = database.DB.Exec(query2, exp.ID)
+	if err != nil {
+		log.Printf("post silinirken hata oluştu: %v", err)
+		return err
 	}
-
 	return nil
 }

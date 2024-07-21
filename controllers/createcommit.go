@@ -16,6 +16,12 @@ func CreateCommit(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	postID := vars["id"]
 
+	err := services.TruePostID(postID)
+	if err != nil {
+		http.Error(w, "POST ID YALNIŞ", http.StatusBadRequest)
+		return
+	}
+
 	// token sahibinin kullanıcı bilgileri alındı
 	claims, ok := r.Context().Value(UserClaimsKey).(*models.Claims)
 	if !ok || claims == nil {
@@ -24,7 +30,7 @@ func CreateCommit(w http.ResponseWriter, r *http.Request) {
 	}
 	var Commit models.Commit
 
-	err := json.NewDecoder(r.Body).Decode(&Commit)
+	err = json.NewDecoder(r.Body).Decode(&Commit)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		log.Printf("json ayıklamada hata")

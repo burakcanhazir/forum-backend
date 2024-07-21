@@ -43,7 +43,7 @@ func createTables() {
         post_id TEXT,
         content TEXT,
         FOREIGN KEY(user_id) REFERENCES users(id),
-        FOREIGN KEY(post_id) REFERENCES posts(id)
+        FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE
     );`
 
 	categoryTable := `
