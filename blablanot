@@ -1,0 +1,77 @@
+package services
+
+import (
+	"burakforum/database"
+	"burakforum/models"
+	"burakforum/utils"
+	"encoding/json"
+	"fmt"
+	"strings"
+
+	"github.com/google/uuid"
+)
+
+// generateUUID yeni bir UUID oluşturur. UUID (Benzersiz Tanımlayıcı) her veri satırı için benzersiz bir kimlik sağlar.
+func generateUUID() string {
+	return uuid.New().String()
+}
+
+func CreatePost(post *models.Post) error {
+	// `post.Category` dilimini JSON formatına çevirir. Bu, kategorilerin JSON formatında saklanmasını sağlar.
+	categoryJSON, err := json.Marshal(post.Category)
+	if err != nil {
+		// JSON formatına dönüştürme işlemi başarısız olursa hata döner.
+		return err
+	}
+
+	// `posts` tablosuna post verilerini ekler. Burada başlık, kullanıcı kimliği, içerik, kategori (JSON formatında) ve oluşturulma tarihi gibi bilgiler eklenir.
+	query := "INSERT INTO posts (id, title, user_id, content, category, created_at) VALUES (?, ?, ?, ?, ?, ?)"
+	_, err = database.DB.Exec(query, post.ID, post.Title, post.UserID, post.Content, string(categoryJSON), post.CreatedAt)
+	if err != nil {
+		// Veritabanı işlemi başarısız olursa hata döner.
+		return err
+	}
+
+	// `categoryValues` haritasını oluşturur ve tüm kategori sütunlarını `0` olarak başlatır. Bu, başlangıçta hiçbir kategorinin seçilmediğini belirtir.
+	categoryValues := make(map[string]int)
+	for key := range utils.CategoryColumns {
+		categoryValues[key] = 0
+	}
+
+	// `post.Category` dilimindeki her bir kategori için ilgili sütunu `1` olarak ayarlar. Bu, ilgili kategorilerin aktif olduğunu belirtir.
+	for _, category := range post.Category {
+		columnName, exists := utils.CategoryColumns[category]
+		if exists {
+			categoryValues[columnName] = 1
+		}
+	}
+
+	// SQL sorgusunda kullanılacak sütun isimlerini ve değerlerini tutacak dilimleri (`slice`) oluşturur.
+	var columns []string
+	var values []interface{}
+	// Sütun isimlerine `id`, `name` ve `post_id` ekler. `id` benzersiz bir tanımlayıcı, `name` sabit bir isim ve `post_id` ilgili post'un kimliğidir.
+	columns = append(columns, "id", "name", "post_id")
+	// Değerler dilimine `generateUUID()` ile oluşturulmuş bir benzersiz ID, "post_category" (sabit bir isim) ve post'un ID'sini ekler.
+	values = append(values, generateUUID(), "post_category", post.ID)
+	// Kategori sütun isimleri ve değerlerini `columns` ve `values` dilimlerine ekler.
+	for key, value := range categoryValues {
+		columns = append(columns, key)
+		values = append(values, value)
+	}
+
+	// SQL sorgusunu dinamik olarak oluşturur. `columns` dilimindeki sütun isimlerini ve `values` dilimindeki değerleri kullanarak sorgu oluşturur.
+	// Sütun isimlerini virgülle ayırarak ve değer yer tutucularını (`?`) oluşturur.
+	insertQuery := fmt.Sprintf("INSERT INTO categories (%s) VALUES (%s)",
+		strings.Join(columns, ", "),
+		strings.TrimRight(strings.Repeat("?, ", len(values)), ", "))
+
+	// Oluşturulan SQL sorgusunu çalıştırır ve `categories` tablosuna veri ekler.
+	_, err = database.DB.Exec(insertQuery, values...)
+	if err != nil {
+		// Veritabanı işlemi başarısız olursa hata döner.
+		return err
+	}
+
+	// İşlem başarılı olduğunda `nil` döner.
+	return nil
+}
