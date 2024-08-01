@@ -18,9 +18,10 @@ func main() {
 	protected := r.PathPrefix("/api/v1").Subrouter()
 	protected.Use(middleware.AuthMiddleware)
 
-	// middleware gerektirmeyen endpointler USER
+	// middleware gerektirmeyen endpointler USER REGİSTER VE LOGİN
 	r.HandleFunc("/api/v1/register", controllers.Register).Methods("POST") // YENİ KULLANICI OLUŞTUR
 	r.HandleFunc("/api/v1/login", controllers.Login).Methods("POST")       // GİRİŞ YAP
+	r.HandleFunc("/api/v1/logout", controllers.Logout).Methods("POST")     // çıkış yapmak
 
 	// USERS İŞLEMLERİ
 	protected.HandleFunc("/getusers", controllers.GetUsers).Methods("GET")          // KULLANICILARI GÖRÜNTÜLE
@@ -31,9 +32,7 @@ func main() {
 	r.HandleFunc("/api/v1/homepage", controllers.GetPosts).Methods("GET") // tüm postları görüntüle
 
 	// POST İŞLEMLERİ
-
-	// r.HandleFunc("/api/v1/getpostcategories/{id}", controllers.GetPostCategories).Methods("GET") // belirli gönderiyi görüntüler ... // bu kısım sorunlu ; bir post birden fazla kategori barındıracak.
-	protected.HandleFunc("/createpost", controllers.CreatePost).Methods("POST")             // YENİ POST OLUŞTURMA
+	protected.HandleFunc("/createpost", controllers.CreatePost).Methods("POST")             // YENİ POST OLUŞTURMA & CATEGORİ İÇİNDE
 	protected.HandleFunc("/getpost/{id}", controllers.GetPostID).Methods("GET")             // belirli gönderiyi görüntüler
 	protected.HandleFunc("/users/{id}/getpost", controllers.GetUsersPostsID).Methods("GET") // belirli kullanıcının tüm gönderilerini görüntüle
 	protected.HandleFunc("/deletepost/{id}", controllers.DeletePost).Methods("DELETE")      // POST SİLME

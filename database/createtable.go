@@ -7,6 +7,12 @@ import (
 )
 
 func createTables() {
+	blackListToken := `
+	CREATE TABLE IF NOT EXISTS blacklist (
+		token TEXT PRIMARY KEY,
+        tokenstring TEXT
+	);`
+
 	userTable := `
     CREATE TABLE IF NOT EXISTS users (
         id TEXT PRIMARY KEY,
@@ -70,6 +76,10 @@ func createTables() {
 	_, err := DB.Exec(userTable)
 	if err != nil {
 		log.Fatalf("Failed to create users table: %v", err)
+	}
+	_, err = DB.Exec(blackListToken)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	_, err = DB.Exec(postTable)

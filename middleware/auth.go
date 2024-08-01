@@ -49,6 +49,7 @@ func AuthenticateUser(name, password string) (string, error) {
 
 // token doğrulaması yapılıyor
 func ValidateToken(tokenString string) (*models.Claims, error) {
+	// Blacklist kontrolü
 	claims := &models.Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return jwtKey, nil
@@ -62,5 +63,6 @@ func ValidateToken(tokenString string) (*models.Claims, error) {
 	if !token.Valid {
 		return nil, errors.New("invalid token")
 	}
+
 	return claims, nil
 }

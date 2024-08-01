@@ -2,8 +2,11 @@ package middleware
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"strings"
+
+	"burakforum/database"
 
 	"github.com/dgrijalva/jwt-go"
 )
@@ -30,6 +33,26 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 		// "Bearer " prefix'ini kaldır
 		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
+
+		// OTURUM SÜRESİ BİTMİŞSE NEXT HANDLER OLMAYACAK
+		rows, err := database.DB.Query("SELECT tokenstring FROM blacklist")
+		if err != nil {
+			log.Fatalf("Failed to execute query: %v", err)
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var isblocked string
+
+			if err := rows.Scan(&isblocked); err != nil {
+				log.Fatalf("Failed to scan row: %v", err)
+			}
+			if isblocked == tokenString {
+				http.Error(w, "oturum süresi bitmiş", http.StatusBadRequest)
+				return
+			}
+
+		}
 
 		// Token'ı doğrula
 		claims, err := ValidateToken(tokenString)
