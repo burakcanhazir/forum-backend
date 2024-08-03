@@ -9,11 +9,20 @@ import (
 	"burakforum/middleware"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func main() {
 	database.InitDB()
 	r := mux.NewRouter()
+
+	// CORS ayarlarını yapın
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+	})
 
 	protected := r.PathPrefix("/api/v1").Subrouter()
 	protected.Use(middleware.AuthMiddleware)
@@ -48,5 +57,7 @@ func main() {
 	// Kategori
 	r.HandleFunc("/api/v1/getcategoriespost/{id}", controllers.GetCategoriesPost).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":8000", r))
+	// CORS middleware'ini uygulayın
+	handler := c.Handler(r)
+	log.Fatal(http.ListenAndServe(":8000", handler))
 }
