@@ -1,12 +1,12 @@
 package controllers
 
 import (
+	"burakforum/database"
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
 	"time"
-
-	"burakforum/database"
 )
 
 func Logout(w http.ResponseWriter, r *http.Request) {
@@ -32,4 +32,5 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	})
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Successfully logged out"))
+	fmt.Println("succesfull")
 }

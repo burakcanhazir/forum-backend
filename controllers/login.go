@@ -1,12 +1,11 @@
 package controllers
 
 import (
+	"burakforum/middleware"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
-
-	"burakforum/middleware"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -33,6 +32,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Expires: time.Now().Add(24 * time.Hour),
 	})
 
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(struct {
+		Token string `json:"token"`
+	}{Token: token})
 	fmt.Println("login succesful", token)
 }

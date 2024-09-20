@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"encoding/json"
-	"net/http"
-
 	"burakforum/models"
 	"burakforum/services"
+	"encoding/json"
+	"fmt"
+	"net/http"
 
 	"github.com/google/uuid"
 )
@@ -26,4 +26,5 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
+	fmt.Println(&user)
 }
