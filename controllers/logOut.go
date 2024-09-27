@@ -25,11 +25,16 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.SetCookie(w, &http.Cookie{
-		Name:    "token",
-		Value:   "",
-		MaxAge:  -1,
-		Expires: time.Unix(0, 0),
+		Name:     "token",
+		Value:    "",
+		Path:     "/",                           // Cookie'nin geçerli olduğu path
+		Domain:   "http://localhost:8081/login", // Cookie'nin ayarlandığı domain
+		MaxAge:   -1,                            // Cookie'yi hemen sil
+		Expires:  time.Unix(0, 0),               // Geçmiş bir tarihe ayarla
+		HttpOnly: true,                          // Sadece HTTP isteklerinde kullanılabilir
+		Secure:   false,                         // Eğer HTTPS kullanmıyorsan, secure bayrağı false olmalı
 	})
+
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Successfully logged out"))
 	fmt.Println("succesfull")
