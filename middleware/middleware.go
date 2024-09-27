@@ -1,12 +1,10 @@
 package middleware
 
 import (
+	"burakforum/database"
 	"context"
 	"log"
 	"net/http"
-	"strings"
-
-	"burakforum/database"
 
 	"github.com/dgrijalva/jwt-go"
 )
@@ -22,19 +20,16 @@ type UserClaims struct {
 // AuthMiddleware yetkilendirme kontrolü yapan middleware fonksiyonu
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Authorization başlığını al
-		tokenString := r.Header.Get("Authorization")
-
-		// Başlık yoksa yetkilendirme hatası döndür
-		if tokenString == "" {
-			http.Error(w, "Authorization header is missing", http.StatusUnauthorized)
+		// Cookie'den token'ı al
+		cookie, err := r.Cookie("token")
+		if err != nil {
+			http.Error(w, "Token not found in cookies", http.StatusUnauthorized)
 			return
 		}
 
-		// "Bearer " prefix'ini kaldır
-		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
+		tokenString := cookie.Value
 
-		// OTURUM SÜRESİ BİTMİŞSE NEXT HANDLER OLMAYACAK
+		// Token'ı blacklist'e göre kontrol et
 		rows, err := database.DB.Query("SELECT tokenstring FROM blacklist")
 		if err != nil {
 			log.Fatalf("Failed to execute query: %v", err)
@@ -43,15 +38,13 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 		for rows.Next() {
 			var isblocked string
-
 			if err := rows.Scan(&isblocked); err != nil {
 				log.Fatalf("Failed to scan row: %v", err)
 			}
 			if isblocked == tokenString {
-				http.Error(w, "oturum süresi bitmiş", http.StatusBadRequest)
+				http.Error(w, "Session expired", http.StatusBadRequest)
 				return
 			}
-
 		}
 
 		// Token'ı doğrula
@@ -61,12 +54,8 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		// Token geçerliyse isteği bir sonraki handler'a geçir
-		// İsteğin context'ine claims ekleyebiliriz
-		ctx := r.Context()
-		ctx = context.WithValue(ctx, "userClaims", claims)
-		r = r.WithContext(ctx)
-
-		next.ServeHTTP(w, r)
+		// Claims'leri context'e ekle
+		ctx := context.WithValue(r.Context(), "userClaims", claims)
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

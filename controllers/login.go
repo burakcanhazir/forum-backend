@@ -25,12 +25,18 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		// http.Redirect(w, r, "/api/v1/register", http.StatusMovedPermanently) eğer kullanıcı bulunamadıysa bunu ekleyecem
 		return
 	}
-
 	http.SetCookie(w, &http.Cookie{
-		Name:    "token",
-		Value:   token,
-		Expires: time.Now().Add(24 * time.Hour),
+		Name:     "token",
+		Value:    token,
+		Expires:  time.Now().Add(24 * time.Hour),
+		Path:     "/",
+		SameSite: http.SameSiteLaxMode, // Lax modunu kullan
+		Secure:   false,                // HTTP üzerinde true yapma
+		HttpOnly: true,                 // Güvenlik için doğru
 	})
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8081")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type") // Bunu ekle
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

@@ -25,6 +25,14 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
-	fmt.Println(&user)
+	// Başarılı yanıt olarak JSON formatında bir mesaj döndür
+	response := map[string]string{
+		"message": "Register successful",
+		"userId":  user.ID,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(response)
+	fmt.Println("Register Succesful", &user)
 }

@@ -1,12 +1,11 @@
 package middleware
 
 import (
+	"burakforum/database"
+	"burakforum/models"
 	"database/sql"
 	"errors"
 	"time"
-
-	"burakforum/database"
-	"burakforum/models"
 
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
@@ -47,9 +46,7 @@ func AuthenticateUser(name, password string) (string, error) {
 	return tokenString, nil
 }
 
-// token doğrulaması yapılıyor
 func ValidateToken(tokenString string) (*models.Claims, error) {
-	// Blacklist kontrolü
 	claims := &models.Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		return jwtKey, nil

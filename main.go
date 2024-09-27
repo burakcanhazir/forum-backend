@@ -1,12 +1,11 @@
 package main
 
 import (
-	"log"
-	"net/http"
-
 	"burakforum/controllers"
 	"burakforum/database"
 	"burakforum/middleware"
+	"log"
+	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -18,7 +17,7 @@ func main() {
 
 	// CORS ayarlarını yapın
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
+		AllowedOrigins:   []string{"http://localhost:8081"},
 		AllowCredentials: true,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
