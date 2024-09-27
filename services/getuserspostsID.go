@@ -1,10 +1,10 @@
 package services
 
 import (
-	"log"
-
 	"burakforum/database"
 	"burakforum/models"
+	"log"
+	"strings"
 )
 
 func GetUsersPostsID(userID string) ([]models.Post, error) {
@@ -18,10 +18,14 @@ func GetUsersPostsID(userID string) ([]models.Post, error) {
 	}
 
 	for row.Next() {
-		err := row.Scan(&post.ID, &post.Title, &post.UserID, &post.Content, &post.CreatedAt)
+		var category string // Category'yi string olarak alacağız
+		err := row.Scan(&post.ID, &post.Title, &post.UserID, &post.Content, &category, &post.CreatedAt)
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		// Category'yi []string'e dönüştürüyoruz
+		post.Category = strings.Split(category, ",") // Kategoriler virgülle ayrılmışsa
 		posts = append(posts, post)
 	}
 	return posts, nil

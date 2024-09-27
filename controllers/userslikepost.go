@@ -28,6 +28,5 @@ func UsersLikesPost(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(post)
-	fmt.Println(post)
-	fmt.Println("beğenilen postlar istendi")
+	fmt.Println("SUCCESFUL USERSLİKEPOST")
 }

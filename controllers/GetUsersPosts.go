@@ -1,18 +1,23 @@
 package controllers
 
 import (
+	"burakforum/models"
+	"burakforum/services"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-
-	"burakforum/services"
-
-	"github.com/gorilla/mux"
 )
 
 func GetUsersPostsID(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	userID := vars["id"]
+	claims, ok := r.Context().Value(UserClaimsKey).(*models.Claims)
+	if !ok || claims == nil {
+		http.Error(w, "Yetkilendirme hatası", http.StatusUnauthorized)
+		return
+	}
+
+	userID := claims.UserID
+	fmt.Println(userID)
 
 	usersposts, err := services.GetUsersPostsID(userID)
 	if err != nil {
@@ -21,4 +26,5 @@ func GetUsersPostsID(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(usersposts)
+	fmt.Println("SUCCESFULL GETUSERSPOSTSID")
 }
