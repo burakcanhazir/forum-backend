@@ -20,7 +20,6 @@ func UsersLikesPost(w http.ResponseWriter, r *http.Request) {
 
 	post, err := services.UsersLikesPost(userID)
 	if err != nil {
-		http.Error(w, "POSTLAR GÖRÜNTÜLENİRKEN SORUN OLUŞTU", http.StatusBadRequest)
 		// Hata mesajını logla
 		log.Println("Error fetching user liked posts:", err) // Hata loglama
 		return

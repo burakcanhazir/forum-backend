@@ -1,11 +1,10 @@
 package services
 
 import (
-	"errors"
-	"log"
-
 	"burakforum/database"
 	"burakforum/models"
+	"errors"
+	"log"
 )
 
 func FieldPosts(userID string) ([]string, error) {

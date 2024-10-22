@@ -1,6 +1,8 @@
 package models
 
-import "database/sql"
+import (
+	"database/sql"
+)
 
 // Post struct defines the structure for post data
 type Post struct {

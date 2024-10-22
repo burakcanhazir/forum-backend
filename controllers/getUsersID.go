@@ -1,10 +1,9 @@
 package controllers
 
 import (
+	"burakforum/services"
 	"encoding/json"
 	"net/http"
-
-	"burakforum/services"
 
 	"github.com/gorilla/mux"
 )

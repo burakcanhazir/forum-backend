@@ -40,10 +40,10 @@ func main() {
 	r.HandleFunc("/api/v1/homepage", controllers.GetPosts).Methods("GET") // tüm postları görüntüle
 
 	// POST İŞLEMLERİ
-	protected.HandleFunc("/createpost", controllers.CreatePost).Methods("POST")        // YENİ POST OLUŞTURMA & CATEGORİ İÇİNDE
-	protected.HandleFunc("/getpost/{id}", controllers.GetPostID).Methods("GET")        // belirli gönderiyi görüntüler
-	protected.HandleFunc("/users/getpost", controllers.GetUsersPostsID).Methods("GET") // belirli kullanıcının tüm gönderilerini görüntüle
-	protected.HandleFunc("/deletepost/{id}", controllers.DeletePost).Methods("DELETE") // POST SİLME
+	protected.HandleFunc("/createpost", controllers.CreatePost).Methods("POST")             // YENİ POST OLUŞTURMA & CATEGORİ İÇİNDE
+	r.HandleFunc("/api/v1/getpost/{id}", controllers.GetPostID).Methods("GET")              // belirli gönderiyi görüntüler
+	protected.HandleFunc("/users/getpost/{id}", controllers.GetUsersPostsID).Methods("GET") // belirli kullanıcının tüm gönderilerini görüntüle
+	protected.HandleFunc("/deletepost/{id}", controllers.DeletePost).Methods("DELETE")      // POST SİLME
 
 	// LİKE İŞLEMLERİ
 	protected.HandleFunc("/{post_id}/like", controllers.LikePost).Methods("POST") // POSTA LİKE ATMA
