@@ -1,11 +1,10 @@
 package controllers
 
 import (
-	"log"
-	"net/http"
-
 	"burakforum/models"
 	"burakforum/services"
+	"log"
+	"net/http"
 
 	"github.com/gorilla/mux"
 )
@@ -29,6 +28,5 @@ func LikePost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Beğeni güncellemesinde hata", http.StatusInternalServerError)
 		return
 	}
-
-	w.WriteHeader(http.StatusOK) // Başarıyla tamamlandığında HTTP 200 döner
+	w.WriteHeader(http.StatusOK)
 }

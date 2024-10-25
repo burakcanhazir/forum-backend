@@ -28,9 +28,9 @@ func createTables() {
         user_id TEXT,
         content TEXT,
         created_at TEXT,
-        category TEXT
+        category TEXT,
         like_count INTEGER DEFAULT 0,
-        FOREIGN KEY(user_id) REFERENCES users(id)
+        FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     );`
 
 	likeDislikeTable := `
@@ -39,8 +39,8 @@ func createTables() {
         post_id TEXT,
         user_id TEXT,
         is_like BOOLEAN,
-        FOREIGN KEY(post_id) REFERENCES posts(id),
-        FOREIGN KEY(user_id) REFERENCES users(id)
+        FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE,
+        FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
     );`
 
 	createCommit := `
@@ -70,7 +70,7 @@ func createTables() {
         html TEXT,
         css TEXT,
         chat TEXT,
-        FOREIGN KEY(post_id) REFERENCES posts(id)
+        FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE
     );`
 
 	_, err := DB.Exec(userTable)

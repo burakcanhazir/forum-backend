@@ -27,9 +27,9 @@ func main() {
 	protected.Use(middleware.AuthMiddleware)
 
 	// middleware gerektirmeyen endpointler USER REGİSTER VE LOGİN
-	r.HandleFunc("/api/v1/register", controllers.Register).Methods("POST") // YENİ KULLANICI OLUŞTUR
-	r.HandleFunc("/api/v1/login", controllers.Login).Methods("POST")       // GİRİŞ YAP
-	r.HandleFunc("/api/v1/logout", controllers.Logout).Methods("POST")     // çıkış yapmak
+	r.HandleFunc("/api/v1/register", controllers.Register).Methods("POST") // YENİ KULLANICI OLUŞTUR   --YAPILDI
+	r.HandleFunc("/api/v1/login", controllers.Login).Methods("POST")       // GİRİŞ YAP                --YAPILDI
+	r.HandleFunc("/api/v1/logout", controllers.Logout).Methods("POST")     // çıkış yapmak             --YAPILDI
 
 	// USERS İŞLEMLERİ
 	protected.HandleFunc("/getusers", controllers.GetUsers).Methods("GET")          // KULLANICILARI GÖRÜNTÜLE
@@ -37,24 +37,24 @@ func main() {
 	protected.HandleFunc("/deleteusers", controllers.DeleteUsers).Methods("DELETE") // KULLANICI SİLME
 
 	// middleware gerektirmeyen endpointler POST
-	r.HandleFunc("/api/v1/homepage", controllers.GetPosts).Methods("GET") // tüm postları görüntüle
+	r.HandleFunc("/api/v1/homepage", controllers.GetPosts).Methods("GET") // tüm postları görüntüle         --YAPILDI
 
 	// POST İŞLEMLERİ
-	protected.HandleFunc("/createpost", controllers.CreatePost).Methods("POST")             // YENİ POST OLUŞTURMA & CATEGORİ İÇİNDE
-	r.HandleFunc("/api/v1/getpost/{id}", controllers.GetPostID).Methods("GET")              // belirli gönderiyi görüntüler
-	protected.HandleFunc("/users/getpost/{id}", controllers.GetUsersPostsID).Methods("GET") // belirli kullanıcının tüm gönderilerini görüntüle
+	protected.HandleFunc("/createpost", controllers.CreatePost).Methods("POST")             // YENİ POST OLUŞTURMA & CATEGORİ İÇİNDE             --YAPILDI
+	r.HandleFunc("/api/v1/getpost/{id}", controllers.GetPostID).Methods("GET")              // belirli gönderiyi görüntüler                      --YAPILDI
+	protected.HandleFunc("/users/getpost/{id}", controllers.GetUsersPostsID).Methods("GET") // belirli kullanıcının tüm gönderilerini görüntüle   --YAPILDI
 	protected.HandleFunc("/deletepost/{id}", controllers.DeletePost).Methods("DELETE")      // POST SİLME
 
 	// LİKE İŞLEMLERİ
-	protected.HandleFunc("/{post_id}/like", controllers.LikePost).Methods("POST") // POSTA LİKE ATMA
-	protected.HandleFunc("/mylikes", controllers.UsersLikesPost).Methods("GET")   // like attıklarını görüntüleme
+	protected.HandleFunc("/{post_id}/like", controllers.LikePost).Methods("POST") // POSTA LİKE ATMA                                        --YAPILDI
+	protected.HandleFunc("/mylikes", controllers.UsersLikesPost).Methods("GET")   // like attıklarını görüntüleme                            --YAPILDI
 
 	// commit işlemleri
 	protected.HandleFunc("/createcommit/{id}", controllers.CreateCommit).Methods("POST")
 	protected.HandleFunc("/deletecommit/{postID}/{commitID}", controllers.DeleteCommit).Methods("DELETE")
 
 	// Kategori
-	r.HandleFunc("/api/v1/getcategoriespost/{id}", controllers.GetCategoriesPost).Methods("GET")
+	r.HandleFunc("/api/v1/getcategoriespost/{id}", controllers.GetCategoriesPost).Methods("GET") // --YAPILDI
 
 	// CORS middleware'ini uygulayın
 	handler := c.Handler(r)

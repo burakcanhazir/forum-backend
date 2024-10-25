@@ -3,6 +3,7 @@ package services
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"log"
 
 	"burakforum/database"
@@ -12,6 +13,7 @@ import (
 var ErrNoPostFound = errors.New("no post found with the given ID")
 
 func DeletePost(postID string) error {
+	fmt.Println(postID)
 	check := "SELECT id, title, content, user_id, created_at FROM posts WHERE id = ?"
 	var exp models.Post
 
