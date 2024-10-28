@@ -1,11 +1,12 @@
 package services
 
 import (
-	"burakforum/database"
-	"burakforum/models"
 	"database/sql"
 	"encoding/json"
 	"log"
+
+	"burakforum/database"
+	"burakforum/models"
 )
 
 func GetpostID(postID string) (*models.Post, error) {
@@ -22,7 +23,7 @@ func GetpostID(postID string) (*models.Post, error) {
 		&fieldpost.Content,
 		&fieldpost.CreatedAt, // created_at TEXT olarak saklandığı için string
 		&categoryJSON,        // category JSON formatında TEXT olarak saklanıyor
-		// like_count alanını da ekliyoruz
+		&fieldpost.Likes,
 	)
 	if err != nil {
 		if err == sql.ErrNoRows {

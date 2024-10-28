@@ -1,12 +1,13 @@
 package controllers
 
 import (
-	"burakforum/models"
-	"burakforum/services"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+
+	"burakforum/models"
+	"burakforum/services"
 )
 
 func GetUsersPostsID(w http.ResponseWriter, r *http.Request) {

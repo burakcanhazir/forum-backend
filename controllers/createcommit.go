@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -13,6 +14,7 @@ import (
 
 func CreateCommit(w http.ResponseWriter, r *http.Request) {
 	// postID alındı
+	fmt.Println("geldi yorum isteği")
 	vars := mux.Vars(r)
 	postID := vars["id"]
 
@@ -24,6 +26,7 @@ func CreateCommit(w http.ResponseWriter, r *http.Request) {
 
 	// token sahibinin kullanıcı bilgileri alındı
 	claims, ok := r.Context().Value(UserClaimsKey).(*models.Claims)
+	fmt.Println(claims)
 	if !ok || claims == nil {
 		http.Error(w, "Yetkilendirme hatası", http.StatusUnauthorized)
 		return
@@ -36,8 +39,10 @@ func CreateCommit(w http.ResponseWriter, r *http.Request) {
 		log.Printf("json ayıklamada hata")
 		return
 	}
+
 	Commit.UserID = claims.UserID
 	Commit.PostID = postID
+	fmt.Printf("mesaj geldi", Commit.Content)
 
 	err = services.CreateCommit(&Commit)
 	if err != nil {
@@ -45,5 +50,6 @@ func CreateCommit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
+	fmt.Println("evvet oldu")
 	json.NewEncoder(w).Encode(Commit)
 }
