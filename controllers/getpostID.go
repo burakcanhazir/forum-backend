@@ -1,10 +1,11 @@
 package controllers
 
 import (
-	"burakforum/services"
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"burakforum/services"
 
 	"github.com/gorilla/mux"
 )
@@ -13,7 +14,6 @@ func GetPostID(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("burası controllers back")
 	vars := mux.Vars(r)
 	postID := vars["id"]
-	fmt.Println(postID)
 
 	check, err := services.GetpostID(postID)
 	if err != nil {

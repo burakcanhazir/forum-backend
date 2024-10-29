@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"burakforum/models"
-	"burakforum/services"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"time"
+
+	"burakforum/models"
+	"burakforum/services"
 
 	"github.com/google/uuid"
 )
@@ -38,7 +38,6 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to create post: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	fmt.Println(post)
 	log.Printf("Post Title: %s, Content: %s, Categories: %v", post.Title, post.Content, post.Category)
 
 	w.Header().Set("Content-Type", "application/json")
