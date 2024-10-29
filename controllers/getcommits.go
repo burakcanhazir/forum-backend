@@ -1,9 +1,8 @@
 package controllers
 
 import (
-	"net/http"
-
 	"burakforum/services"
+	"net/http"
 
 	"github.com/gorilla/mux"
 )
