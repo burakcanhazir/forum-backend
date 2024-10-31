@@ -53,7 +53,7 @@ func main() {
 	// commit işlemleri
 	protected.HandleFunc("/createcommit/{id}", controllers.CreateCommit).Methods("POST") // yapıldı
 	protected.HandleFunc("/deletecommit/{postID}/{commitID}", controllers.DeleteCommit).Methods("DELETE")
-	protected.HandleFunc("/getcommits/{id}", controllers.GetCommits).Methods("GET")
+	protected.HandleFunc("/getcommits/{id}", controllers.GetCommits).Methods("GET") // YAPILDI
 
 	// Kategori
 	r.HandleFunc("/api/v1/getcategoriespost/{id}", controllers.GetCategoriesPost).Methods("GET") // --YAPILDI

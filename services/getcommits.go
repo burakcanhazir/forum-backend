@@ -5,13 +5,15 @@ import (
 	"log"
 
 	"burakforum/database"
+	"burakforum/models"
 )
 
 func GetCommits(PostID string) string {
-	var CommitsPost []string
+	// Commit struct'larından oluşan bir dilim oluştur.
+	var commits []models.Commit
 
-	// Veritabanından sorguyu çalıştır.
-	Query := "SELECT content FROM commits WHERE post_id = ?"
+	// Veritabanından ID ve content çekilecek.
+	Query := "SELECT id, content FROM commits WHERE post_id = ?"
 	rows, err := database.DB.Query(Query, PostID)
 	if err != nil {
 		log.Println("Yorum bulma esnasında sorun:", err)
@@ -19,22 +21,21 @@ func GetCommits(PostID string) string {
 	}
 	defer rows.Close()
 
-	// Satırları gezerek her bir yorumu `CommitsPost` slice'ine ekleyelim.
+	// Veritabanı satırlarını dolaş ve `commits` dilimine ekle.
 	for rows.Next() {
-		var content string
-		if err := rows.Scan(&content); err != nil {
+		var commit models.Commit
+		if err := rows.Scan(&commit.ID, &commit.Content); err != nil {
 			log.Println("Satır okunurken hata oluştu:", err)
 			return ""
 		}
-		CommitsPost = append(CommitsPost, content)
+		commits = append(commits, commit)
 	}
 
-	// JSON verisini encode etme
-	jsonData, err := json.Marshal(CommitsPost)
+	// JSON verisine çevirme
+	jsonData, err := json.Marshal(commits)
 	if err != nil {
 		log.Println("JSON dönüştürme esnasında hata oluştu:", err)
 		return ""
 	}
-
 	return string(jsonData)
 }
