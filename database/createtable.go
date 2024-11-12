@@ -69,7 +69,12 @@ func createTables() {
         javascript TEXT,
         html TEXT,
         css TEXT,
-        chat TEXT,
+        react TEXT,
+        flutter TEXT,
+        assembly TEXT,
+        perl TEXT,
+        swift TEXT,
+        other TEXT,
         FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE
     );`
 

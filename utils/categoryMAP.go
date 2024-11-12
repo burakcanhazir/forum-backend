@@ -13,5 +13,10 @@ var CategoryColumns = map[string]string{
 	"javascript": "javascript",
 	"html":       "html",
 	"css":        "css",
-	"chat":       "chat",
+	"other":      "other",
+	"react":      "react",
+	"flutter":    "flutter",
+	"assembly":   "assembly",
+	"perl":       "perl",
+	"swift":      "swift",
 }

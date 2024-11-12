@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -15,6 +16,7 @@ func DeleteCommit(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	postID := vars["postID"]
 	commitID := vars["commitID"]
+	fmt.Println(commitID)
 
 	claims, ok := r.Context().Value(UserClaimsKey).(*models.Claims)
 	if !ok || claims == nil {
