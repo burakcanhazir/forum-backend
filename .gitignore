@@ -18,3 +18,5 @@ Thumbs.db
 go.sum
 .env
 
+#veritabanı 
+myproject.db
