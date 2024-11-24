@@ -1,0 +1,6 @@
+#sistem dosyaları 
+myproject.db
+
+
+#bağımlılıklar
+go.sum
