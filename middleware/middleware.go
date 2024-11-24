@@ -19,7 +19,6 @@ func init() {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 	jwtKey = []byte(os.Getenv("JWT_KEY"))
-	log.Println("JWT Key:", string(jwtKey))
 }
 
 // AuthMiddleware yetkilendirme kontrolü yapan middleware fonksiyonu
