@@ -1,20 +1,25 @@
 package middleware
 
 import (
-	"burakforum/database"
 	"context"
 	"log"
 	"net/http"
+	"os"
 
-	"github.com/dgrijalva/jwt-go"
+	"burakforum/database"
+
+	"github.com/joho/godotenv"
 )
 
-// Your secret key
-var jwtKey = []byte("my_secret_key")
+var jwtKey []byte
 
-type UserClaims struct {
-	UserID string `json:"userId"`
-	jwt.StandardClaims
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
+	jwtKey = []byte(os.Getenv("JWT_KEY"))
+	log.Println("JWT Key:", string(jwtKey))
 }
 
 // AuthMiddleware yetkilendirme kontrolü yapan middleware fonksiyonu
