@@ -1,6 +1,18 @@
-#sistem dosyaları 
-myproject.db
+# Go Derleme Çıktıları
+*.exe
+*.out
+*.a
 
+# Go Bağımlılıkları (Bağımlılıkların yedeği Git'te saklanmaz, Go modül sistemi bunu yönetir)
+vendor/
 
-#bağımlılıklar
+# Geçici ve Sistem Dosyaları
+.DS_Store
+Thumbs.db
+
+# IDE dosyaları
+.idea/
+.vscode/
+
+# Go Bağımlılık Dosyaları (Varsa ve size ait değilse)
 go.sum
