@@ -65,7 +65,7 @@ func main() {
 	handler := c.Handler(r)
 	// sunucuyu başlat
 	server := &http.Server{
-		Addr:              ":8000",
+		Addr:              ":" + utils.AppPort,
 		Handler:           handler,
 		ReadTimeout:       2 * time.Second,   // İsteği okumak için maksimum süre
 		WriteTimeout:      10 * time.Second,  // Yanıtı istemciye göndermek için maksimum süre
