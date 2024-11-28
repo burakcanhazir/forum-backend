@@ -16,6 +16,7 @@ Thumbs.db
 
 # Go Bağımlılık Dosyaları (Varsa ve size ait değilse)
 go.sum
+.env
 
 
 #veritabanı 
