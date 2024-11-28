@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"burakforum/database"
-	"burakforum/models"
+	"forumbackend/database"
+	"forumbackend/models"
 )
 
 func GetCategoriesPost(SelectPostLang string) ([]models.Post, error) {

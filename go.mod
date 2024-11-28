@@ -1,4 +1,4 @@
-module burakforum
+module forumbackend
 
 go 1.22.4
 

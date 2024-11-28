@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"burakforum/models"
-	"burakforum/services"
+	"forumbackend/models"
+	"forumbackend/services"
 	"log"
 	"net/http"
 

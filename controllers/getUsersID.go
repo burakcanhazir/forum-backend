@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"burakforum/services"
+	"forumbackend/services"
 	"encoding/json"
 	"net/http"
 

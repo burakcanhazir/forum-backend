@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"log"
 
-	"burakforum/database"
-	"burakforum/models"
+	"forumbackend/database"
+	"forumbackend/models"
 )
 
 func GetpostID(postID string) (*models.Post, error) {

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"log"
 
-	"burakforum/database"
-	"burakforum/models"
+	"forumbackend/database"
+	"forumbackend/models"
 )
 
 func GetCommits(PostID string) string {

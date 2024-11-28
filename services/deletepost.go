@@ -5,8 +5,8 @@ import (
 	"errors"
 	"log"
 
-	"burakforum/database"
-	"burakforum/models"
+	"forumbackend/database"
+	"forumbackend/models"
 )
 
 var ErrNoPostFound = errors.New("no post found with the given ID")

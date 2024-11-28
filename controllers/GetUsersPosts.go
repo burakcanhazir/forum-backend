@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
-	"burakforum/models"
-	"burakforum/services"
+	"forumbackend/models"
+	"forumbackend/services"
 )
 
 func GetUsersPostsID(w http.ResponseWriter, r *http.Request) {

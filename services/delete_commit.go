@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 
-	"burakforum/database"
+	"forumbackend/database"
 )
 
 func DeleteCommit(userID, postID, commitID string) error {

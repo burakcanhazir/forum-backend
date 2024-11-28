@@ -1,8 +1,8 @@
 package services
 
 import (
-	"burakforum/database"
-	"burakforum/models"
+	"forumbackend/database"
+	"forumbackend/models"
 )
 
 func GetUsers() ([]models.User, error) {

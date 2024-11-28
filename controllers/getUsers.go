@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"burakforum/services"
+	"forumbackend/services"
 )
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {

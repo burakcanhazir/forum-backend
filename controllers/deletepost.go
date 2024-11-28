@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"burakforum/services"
+	"forumbackend/services"
 
 	"github.com/gorilla/mux"
 )

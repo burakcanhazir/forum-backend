@@ -1,8 +1,8 @@
 package services
 
 import (
-	"burakforum/database"
-	"burakforum/models"
+	"forumbackend/database"
+	"forumbackend/models"
 
 	_ "github.com/mattn/go-sqlite3"
 )

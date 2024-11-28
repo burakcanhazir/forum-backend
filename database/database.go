@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"log"
 
+	"forumbackend/utils"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -11,8 +13,9 @@ var DB *sql.DB
 
 // InitDB initializes the SQLite database connection
 func InitDB() {
+	utils.Init()
 	var err error
-	DB, err = sql.Open("sqlite3", "./myproject.db")
+	DB, err = sql.Open(utils.DbDriver, utils.DbPath)
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}

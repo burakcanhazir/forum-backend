@@ -5,8 +5,8 @@ import (
 	"errors"
 	"log"
 
-	"burakforum/database"
-	"burakforum/models"
+	"forumbackend/database"
+	"forumbackend/models"
 
 	"golang.org/x/crypto/bcrypt"
 )

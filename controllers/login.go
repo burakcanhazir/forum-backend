@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"burakforum/middleware"
+	"forumbackend/middleware"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {

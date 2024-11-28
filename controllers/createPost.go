@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"burakforum/models"
-	"burakforum/services"
+	"forumbackend/models"
+	"forumbackend/services"
 
 	"github.com/google/uuid"
 )

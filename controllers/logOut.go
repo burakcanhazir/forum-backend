@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"burakforum/database"
+	"forumbackend/database"
 )
 
 func Logout(w http.ResponseWriter, r *http.Request) {

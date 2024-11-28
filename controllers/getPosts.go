@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"burakforum/services" // services paketini import et
+	"forumbackend/services" // services paketini import et
 )
 
 // getPosts HTTP işleyicisi

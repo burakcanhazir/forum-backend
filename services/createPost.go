@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"burakforum/database"
-	"burakforum/models"
-	"burakforum/utils"
+	"forumbackend/database"
+	"forumbackend/models"
+	"forumbackend/utils"
 
 	"github.com/google/uuid"
 )

@@ -6,15 +6,14 @@ import (
 	"log"
 	"net/http"
 
-	"burakforum/models"
-	"burakforum/services"
+	"forumbackend/models"
+	"forumbackend/services"
 
 	"github.com/gorilla/mux"
 )
 
 func CreateCommit(w http.ResponseWriter, r *http.Request) {
 	// postID alındı
-	fmt.Println("geldi yorum isteği")
 	vars := mux.Vars(r)
 	postID := vars["id"]
 
@@ -50,6 +49,5 @@ func CreateCommit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	fmt.Println("evvet oldu")
 	json.NewEncoder(w).Encode(Commit)
 }

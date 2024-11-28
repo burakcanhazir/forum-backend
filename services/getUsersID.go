@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"log"
 
-	"burakforum/database"
-	"burakforum/models"
+	"forumbackend/database"
+	"forumbackend/models"
 )
 
 func GetUserID(userID string) (*models.User, error) {

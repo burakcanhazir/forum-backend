@@ -5,8 +5,10 @@ import (
 	"errors"
 	"time"
 
-	"burakforum/database"
-	"burakforum/models"
+	"forumbackend/database"
+	"forumbackend/models"
+
+	"forumbackend/utils"
 
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
@@ -15,6 +17,7 @@ import (
 // login işlemi yapılıyor ve token veriliyor
 
 func AuthenticateUser(name, password string) (string, error) {
+	utils.Init()
 	var user models.User
 	query := "SELECT id, name, password FROM users WHERE name = ?"
 	err := database.DB.QueryRow(query, name).Scan(&user.ID, &user.Name, &user.Password)
@@ -39,7 +42,7 @@ func AuthenticateUser(name, password string) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString([]byte(utils.JwtSecret))
 	if err != nil {
 		return "", err
 	}
@@ -48,9 +51,10 @@ func AuthenticateUser(name, password string) (string, error) {
 }
 
 func ValidateToken(tokenString string) (*models.Claims, error) {
+	utils.Init()
 	claims := &models.Claims{}
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-		return jwtKey, nil
+		return []byte(utils.JwtSecret), nil
 	})
 	if err != nil {
 		if err == jwt.ErrSignatureInvalid {

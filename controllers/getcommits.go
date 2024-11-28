@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"burakforum/services"
+	"forumbackend/services"
 	"net/http"
 
 	"github.com/gorilla/mux"

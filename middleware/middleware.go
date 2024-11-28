@@ -4,22 +4,9 @@ import (
 	"context"
 	"log"
 	"net/http"
-	"os"
 
-	"burakforum/database"
-
-	"github.com/joho/godotenv"
+	"forumbackend/database"
 )
-
-var jwtKey []byte
-
-func init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
-	jwtKey = []byte(os.Getenv("JWT_KEY"))
-}
 
 // AuthMiddleware yetkilendirme kontrolü yapan middleware fonksiyonu
 func AuthMiddleware(next http.Handler) http.Handler {

@@ -3,6 +3,7 @@ package utils
 import (
 	"log"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -23,15 +24,15 @@ var (
 
 	// CORS ayarları
 	AllowedOrigins string
-	AllowedMethods string
-	AllowedHeaders string
+	AllowedMethods []string
+	AllowedHeaders []string
 
 	// Rate limiting
 	RateLimit  string
 	RateWindow string
 )
 
-func init() {
+func Init() {
 	// .env dosyasını yükle
 	err := godotenv.Load()
 	if err != nil {
@@ -50,8 +51,10 @@ func init() {
 	JwtExpiration = os.Getenv("JWT_EXPIRATION")
 
 	AllowedOrigins = os.Getenv("ALLOWED_ORIGINS")
-	AllowedMethods = os.Getenv("ALLOWED_METHODS")
-	AllowedHeaders = os.Getenv("ALLOWED_HEADERS")
+
+	AllowedMethods = strings.Split(os.Getenv("ALLOWED_METHODS"), ",")
+
+	AllowedHeaders = strings.Split(os.Getenv("ALLOWED_HEADERS"), ",")
 
 	RateLimit = os.Getenv("RATE_LIMIT")
 	RateWindow = os.Getenv("RATE_LIMIT_WINDOW")

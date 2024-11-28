@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"burakforum/models"
-	"burakforum/services"
+	"forumbackend/models"
+	"forumbackend/services"
 )
 
 const UserClaimsKey = "userClaims"
