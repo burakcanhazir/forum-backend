@@ -15,7 +15,7 @@ Thumbs.db
 .vscode/
 
 # Go Bağımlılık Dosyaları (Varsa ve size ait değilse)
-go.sum
+
 .env
 
 
