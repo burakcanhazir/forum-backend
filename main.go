@@ -1,12 +1,13 @@
 package main
 
 import (
-	"burakforum/controllers"
-	"burakforum/database"
-	"burakforum/middleware"
 	"log"
 	"net/http"
 	"time"
+
+	"burakforum/controllers"
+	"burakforum/database"
+	"burakforum/middleware"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"

@@ -1,12 +1,13 @@
 package controllers
 
 import (
-	"burakforum/database"
 	"fmt"
 	"log"
 	"net/http"
 	"strings"
 	"time"
+
+	"burakforum/database"
 )
 
 func Logout(w http.ResponseWriter, r *http.Request) {

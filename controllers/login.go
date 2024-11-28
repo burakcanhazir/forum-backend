@@ -1,11 +1,12 @@
 package controllers
 
 import (
-	"burakforum/middleware"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
+
+	"burakforum/middleware"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {

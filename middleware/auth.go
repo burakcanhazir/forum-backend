@@ -1,11 +1,12 @@
 package middleware
 
 import (
-	"burakforum/database"
-	"burakforum/models"
 	"database/sql"
 	"errors"
 	"time"
+
+	"burakforum/database"
+	"burakforum/models"
 
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
