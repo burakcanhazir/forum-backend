@@ -20,7 +20,7 @@ func main() {
 	utils.Init()
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{utils.AllowedOrigins}, // .env dosyasındaki izinli kökeni kullanıyoruz
+		AllowedOrigins:   []string{utils.AllowedOrigins}, // .env dosyasındaki izinli kökeni kullanıyorum
 		AllowCredentials: true,                           // Credentials (cookie, auth) gönderilecekse true olmalı
 		AllowedMethods:   utils.AllowedMethods,           // methods artık dilim olarak alınıyor
 		AllowedHeaders:   utils.AllowedHeaders,           // headers artık dilim olarak alınıyor

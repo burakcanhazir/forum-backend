@@ -5,8 +5,6 @@ docker kuracaklar
 
 Bir .env.example dosyası oluşturup, içini şu şekilde doldur:
 
-plaintext
-Kodu kopyala
 # .env.example
 APP_ENV=development
 APP_PORT=8000
