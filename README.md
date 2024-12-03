@@ -1,59 +1,81 @@
+***ENGLİSH***
 # FORUM-PROJECT
-A web platform for collaboration on programming languages and related technologies.
+A website for collaboration on programming languages and similar technologies.
 
 ## INTRODUCTION
 
-This project is a forum platform where users can share problems and solutions related to programming languages, algorithms, and software technologies. The project utilizes RESTful APIs for data sharing between users. The backend is developed using Go, while the frontend is created with HTML, CSS, and JavaScript. Docker can be used to easily access the project and run all the services.
+This project is a forum platform where users share problems and solutions related to programming languages, algorithms, and software technologies. The platform facilitates data sharing between users via RESTful APIs. The backend is written in Go, while the frontend is developed using HTML, CSS, and JavaScript. By using Docker, you can easily run all services.
 
 The project is divided into three main components:
-- **backend**: APIs written in Go
-- **frontend**: Interface created with HTML, CSS, and JS
-- **deploy**: Deployment operations using Docker
+- **Backend**: APIs written in Go
+- **Frontend**: User interface developed using HTML, CSS, and JS
+- **Deploy**: Deployment processes with Docker
 
 ## SETUP
 
-To run the project locally, follow the steps below:
+Follow these steps to run the project locally:
 
 1. **Install Docker**: [Docker Installation Video](https://www.youtube.com/watch?v=iqqDU2crIEQ)
-2. **Download all repositories locally**:
-   - [Forum Frontend](https://github.com/burakcanhazir/forum-deploy) - Frontend code
-   - [Forum Backend](https://github.com/burakcanhazir/burak-forumend) - Backend code
-   - [Forum Deployment](https://github.com/burakcanhazir/burakforum) - Deployment and Docker configuration
-
----
-
-### **Usage Section**
-The usage section is quite clear, but a few spelling errors and additional explanations could be added to make parts clearer.
+2. **Clone all repositories to your local machine**:
+   - [Forum Frontend](https://github.com/burakcanhazir/forum-frontend) - Frontend code
+   - [Forum Backend](https://github.com/burakcanhazir/forum-backend) - Backend code
+   - [Forum Deployment](https://github.com/burakcanhazir/forum-deploy) - Deployment and Docker configuration
 
 ```markdown
 ## USAGE
 
-1. **Backend Configuration**: 
-   Copy the content of the `.env.example` file in the backend repository.
+1. **To run locally**
+   - In the terminal, type `git clone https://github.com/burakcanhazir/forum-backend` and `git clone https://github.com/burakcanhazir/forum-frontend`.
+   - Go to the `forum-backend` folder, find the `.env.example` file, fill in the necessary fields, and save the file.
+   - Rename the `.env.example` file to `.env` and save it.
+   - Go to the `forum-backend` and `forum-frontend` directories.
+   - Run both files using the command `go run .`.
 
-2. **Create .env File**: 
-   In the `forum-backend` folder, create a new `.env` file and configure it with the data you copied.
+2. **To run with Docker**
+   - You can visit the DOCKERHUB account "bhazir".
+   - Clone the deploy folder from GitHub using the command `git clone https://github.com/burakcanhazir/forum-deploy`.
+   - Run the following commands in the terminal: `docker pull bhazir/forum-frontend:1.0` and `docker pull bhazir/forum-backend:1.0`.
+   - If you have cloned the `forum-backend` repository, find the `.env.example` file and make the necessary changes as indicated. If you haven't cloned it, here is the content of the `.env.example` file. Copy this content into a `.env` file and follow the above commands step by step.
 
-3. **Start with Docker**: 
-   Navigate to the `docker-deployment` folder and run the following command in your terminal:
-   ```bash
-   docker-compose up --build
+      ```env
+      APP_ENV=development
+      APP_PORT=8000
+      APP_HOST=backend
+
+      DB_DRIVER=sqlite3
+      DB_PATH=./your-project.db # You can change this
+
+      JWT_SECRET=your-secret-key   # You can change this
+      JWT_EXPIRATION=3600  
+
+      ALLOWED_ORIGINS=http://localhost:8081
+      ALLOWED_METHODS=GET,POST,PUT,DELETE
+      ALLOWED_HEADERS=Content-Type,Authorization
+
+      RATE_LIMIT=100  
+      RATE_LIMIT_WINDOW=60
+      ```
+
+   - Rename the `.env.example` file to `.env`.
+   - Go to the Docker-compose directory and run the following command in the terminal: `docker-compose up --build`.
+
+**NOTE**
+- If an error occurs, go to the `docker-compose.yml` file in the `forum-deploy` folder and check the file paths. Make sure to enter the correct paths from your local machine. Then, return to the `forum-deploy` directory and try running `docker-compose up --build` again.
 
 ## License
 
-This project is licensed under the MIT License - see the [License file](LICENSE) for details.
+This project is licensed under the MIT License - see the [LICENSE file](LICENSE) for details.
 
 ## Contact
 
-If you have any questions or suggestions about the project, feel free to reach out via [hazirburakcan@gmail.com].
+If you have any questions or suggestions regarding the project, feel free to contact me at [hazirburakcan@gmail.com].
 
 ## Authors
 
 - [Burakcan Hazir](https://github.com/burakcanhazir)
 
 
-
-
+***TURKİSH***
 # FORUM-PROJECT
 Programla dilleri ve benzer teknolojiler için yardımlaşma adını yapılmış bir web sitesi
 
@@ -74,28 +96,56 @@ Projeyi lokalinizde çalıştırabilmek için aşağıdaki adımları takip edin
 
 1. **Docker'ı kurun**: [Docker Kurulum Videosu](https://www.youtube.com/watch?v=iqqDU2crIEQ)
 2. **Tüm repoları lokalinizde indirin**:
-   - [Forum Frontend](https://github.com/burakcanhazir/forum-deploy) - Frontend kodu
-   - [Forum Backend](https://github.com/burakcanhazir/burak-forumend) - Backend kodu
-   - [Forum Deployment](https://github.com/burakcanhazir/burakforum) - Dağıtım ve Docker yapılandırması
+   - [Forum Frontend](https://github.com/burakcanhazir/forum-frontend) - Frontend kodu
+   - [Forum Backend](https://github.com/burakcanhazir/forum-backend) - Backend kodu
+   - [Forum Deployment](https://github.com/burakcanhazir/forum-deploy) - Dağıtım ve Docker yapılandırması
 
----
-
-### **. Kullanım Bölümü**
-Kullanım kısmı çok net, fakat bir kaç yazım hatası ve daha fazla açıklama ekleyerek kısımları daha anlaşılır hale getirebilirsiniz.
 
 ```markdown
 ## KULLANIM
 
-1. **Backend yapılandırması**: 
-   Backend reposunda bulunan `.env.example` dosyasının içeriğini kopyalayın.
-   
-2. **.env Dosyası Oluşturun**:
-   `forum-backend` klasöründe yeni bir `.env` dosyası oluşturun ve içeriği kopyaladığınız verilerle yapılandırın.
+1. **LOCALDE ÇALIŞTIRMAK İÇİN**
+      -Terminale sırasıyla git clone https://github.com/burakcanhazir/forum-backend ve git clone https://github.com/burakcanhazir/forum-frontend yazın.
+      -Forum-backend klasöründe sizin için hazırlanan .env.example dosyasına gidin ve belirtilen yerleri doldurun ve kaydedin.
+      -.env.example dosyasının adını ".env" olarak değiştirin ve kaydedin
+      -forum-backend ve forum-frontend dizinlerine gidin.
+      -iki dosyayı "go run ." komutu ile çalıştırın.
 
-3. **Docker ile Başlatma**:
-   `docker-deployment` klasörüne gidin ve terminalinizde şu komutu çalıştırın:
-   ```bash
-   docker-compose up --build
+2. **DOCKER İLE ÇALIŞTIRMAK İÇİN**  
+      -    DOCKERHUB  "bhazir" hesabına gidebilirsiniz.
+      - git clone https://github.com/burakcanhazir/forum-deploy komutunu kullanarak Githubtan deploy klasörünü çekin
+      - docker pull bhazir/forum-frontend:1.0 ve docker pull bhazir/forum-backend:1.0 komutlarını sırasıyla terminale kopyalayıp yapıştırın.
+      - eğer forum-backend reposunu indirdiyseniz .env.example dosyasını bulun ve size belirttiğim kısımları değiştirin. Eğer indirmediyseniz sizin için aşağıya .env.example içeriği bırakıyorum. .env isimli dosyaya yapıştırarak yukarıda belirtilen komutları tek tek uygulayın.
+
+            
+      ***APP_ENV=development
+      APP_PORT=8000
+      APP_HOST=backend
+
+      DB_DRIVER=sqlite3
+      DB_PATH=./your-project.db #değişiklik yaparbilirsin  -- you can change
+
+
+      JWT_SECRET=your-secret-key   #değişiklik yaparbilirsin  -- you can change
+      JWT_EXPIRATION=3600  
+ 
+      ALLOWED_ORIGINS=http://localhost:8081
+      ALLOWED_METHODS=GET,POST,PUT,DELETE
+      ALLOWED_HEADERS=Content-Type,Authorization
+
+
+      RATE_LIMIT=100  
+      RATE_LIMIT_WINDOW=60***
+
+
+      - .env.example dosyasının ismini ".env" olarak değiştirin. 
+      - Docker-compose dizinine gidin. Terminale "docker-compose up --build" komutunu kopyalayıp yapışıtırın.
+
+      **NOT**
+      - Eğer hata veriyorsa forum-deploy klasöründeki docker compose.yml dosyasına gidin ve dosya yollarına göz atın. Localinizdeki doğru yolları girin. Ve tekrar forum-deploy dizinine gelip tekrar "docker-compose up --build" komutunu kopyalayıp yapışıtırın.
+
+
+      
 
 ## Lisans
 
